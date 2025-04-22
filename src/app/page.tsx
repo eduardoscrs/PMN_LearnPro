@@ -32,7 +32,7 @@ export default function Home() {
                   <CourseCard
                     title="Introducción a la Programación"
                     description="Fundamentos de programación y algoritmos"
-                    image="/placeholder.svg?height=100&width=250"
+                    image="prog.jpg"
                     instructor="Prof. García"
                     progress={75}
                     href="/cursos/intro-programacion"
@@ -41,7 +41,7 @@ export default function Home() {
                   <CourseCard
                     title="Gestión de Proyectos"
                     description="Metodologías ágiles y gestión de equipos"
-                    image="/placeholder.svg?height=100&width=250"
+                    image="image.jpeg"
                     instructor="Prof. Martínez"
                     progress={30}
                     href="/cursos/gestion-proyectos"
@@ -50,7 +50,7 @@ export default function Home() {
                   <CourseCard
                     title="Análisis de Datos"
                     description="Técnicas estadísticas y visualización"
-                    image="/placeholder.svg?height=100&width=250"
+                    image="data.jpg"
                     instructor="Prof. López"
                     progress={10}
                     href="/cursos/analisis-datos"
