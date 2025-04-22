@@ -74,7 +74,7 @@ export function SiteSidebar() {
           <h2 className="mb-2 px-4 text-xs font-semibold uppercase tracking-tight">
             Comunidad
           </h2>
-          <div className="space-y-1">
+          {/* <div className="space-y-1">
             <Button variant="ghost" className="w-full justify-start gap-2" asChild>
               <Link href="/foros" onClick={handleLinkClick}>
                 <MessageSquare className="h-4 w-4" />
@@ -87,7 +87,7 @@ export function SiteSidebar() {
                 Comunidad
               </Link>
             </Button>
-          </div>
+          </div> */}
         </div>
         <div className="px-3 py-2">
           <h2 className="mb-2 px-4 text-xs font-semibold uppercase tracking-tight">

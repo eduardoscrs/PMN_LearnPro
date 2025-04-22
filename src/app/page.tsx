@@ -155,7 +155,7 @@ export default function Home() {
                 </CardFooter>
               </Card>
 
-              <Card>
+              {/* <Card>
                 <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                   <CardTitle className="text-sm font-medium">Foros Activos</CardTitle>
                   <Users className="h-4 w-4 text-muted-foreground" />
@@ -169,7 +169,7 @@ export default function Home() {
                     <Link href="/foros">Ver foros</Link>
                   </Button>
                 </CardFooter>
-              </Card>
+              </Card> */}
             </div>
           </div>
         </main>
