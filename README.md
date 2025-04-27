@@ -1,5 +1,7 @@
 # 📚 PMN LearnPro – Plataforma E-learning Empresarial
 
+link Vercerl https://pmn-learn-pro-qlde.vercel.app/
+
 Este repositorio contiene el **Prototipo Mínimo Navegable (PMN)** de **LearnPro**, una plataforma de aprendizaje empresarial desarrollada con **Next.js 14**. El objetivo del prototipo es demostrar una estructura navegable básica para la futura plataforma, enfocada en la organización de secciones clave, navegación y estilos globales coherentes.
 
 ---

@@ -45,6 +45,7 @@ export default function ProfilePage() {
   }
 
   const handleAvatarUpload = (url: string) => {
+    const newAvatarUrl = "/public/img2.jpg"
     setUserData((prev) => ({ ...prev, avatarUrl: url }))
     setFormData((prev) => ({ ...prev, avatarUrl: url }))
   }
