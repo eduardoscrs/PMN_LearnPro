@@ -44,11 +44,12 @@ export default function ProfilePage() {
     setIsEditing(false)
   }
 
-  const handleAvatarUpload = (url: string) => {
-    const newAvatarUrl = "/public/img2.jpg"
-    setUserData((prev) => ({ ...prev, avatarUrl: url }))
-    setFormData((prev) => ({ ...prev, avatarUrl: url }))
-  }
+  const handleAvatarUpload = () => {
+    const newUrl = "/img2.jpg"; // Ruta a la imagen en la carpeta public
+    setUserData((prev) => ({ ...prev, avatarUrl: newUrl }));
+    setFormData((prev) => ({ ...prev, avatarUrl: newUrl }));
+  };
+  
 
   return (
     <div className="flex min-h-screen flex-col">
