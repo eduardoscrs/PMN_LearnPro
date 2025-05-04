@@ -3,16 +3,21 @@ const mongoose = require('mongoose');
 const courseSchema = new mongoose.Schema({
   title: {
     type: String,
-    required: true
+    required: true,
+    trim: true,
+    minlength: 3
   },
   code: {
     type: String,
     required: true,
-    unique: true
+    unique: true,
+    uppercase: true,
+    trim: true
   },
   description: {
     type: String,
-    required: true
+    required: true,
+    minlength: 10
   },
   instructor: {
     type: mongoose.Schema.Types.ObjectId,
@@ -24,9 +29,19 @@ const courseSchema = new mongoose.Schema({
     ref: 'User'
   }],
   schedule: {
-    days: [String],
-    startTime: String,
-    endTime: String
+    days: {
+      type: [String],
+      enum: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
+      default: []
+    },
+    startTime: {
+      type: String,
+      match: /^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$/, // hh:mm formato 24h
+    },
+    endTime: {
+      type: String,
+      match: /^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$/,
+    }
   },
   startDate: {
     type: Date,
@@ -34,7 +49,13 @@ const courseSchema = new mongoose.Schema({
   },
   endDate: {
     type: Date,
-    required: true
+    required: true,
+    validate: {
+      validator: function(value) {
+        return value > this.startDate;
+      },
+      message: 'La fecha de fin debe ser posterior a la fecha de inicio.'
+    }
   },
   createdAt: {
     type: Date,

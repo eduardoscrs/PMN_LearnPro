@@ -1,12 +1,12 @@
 const Course = require('../models/course');
 const User = require('../models/user');
 
-
-
-//? obtener todos los cursos
+// Obtener todos los cursos
 exports.getAllCourses = async (req, res) => {
   try {
-    const courses = await Course.find().populate('instructor', 'name email').populate('students', 'name email');
+    const courses = await Course.find()
+      .populate('instructor', 'name email')
+      .populate('students', 'name email');
     res.json(courses);
   } catch (error) {
     console.error('Error al obtener cursos:', error.message);
@@ -14,7 +14,7 @@ exports.getAllCourses = async (req, res) => {
   }
 };
 
-//? obtener un curso por id
+// Obtener un curso por ID
 exports.getCourseById = async (req, res) => {
   try {
     const course = await Course.findById(req.params.id)
@@ -30,36 +30,33 @@ exports.getCourseById = async (req, res) => {
   }
 };
 
-//? crear un curso
-// exports.createCourse = async (req, res) => {
-//   try {
-//     const { title, description, instructor } = req.body;
+// Obtener cursos por instructor
+exports.getCoursesByInstructor = async (req, res) => {
+  try {
+    const courses = await Course.find({ instructor: req.params.instructorId });
+    res.json(courses);
+  } catch (error) {
+    console.error('Error al obtener cursos por instructor:', error.message);
+    res.status(500).json({ message: 'Error al obtener cursos por instructor' });
+  }
+};
 
-//     // Verificar si el instructor existe y tiene el rol adecuado
-//     const instructorUser = await User.findById(instructor);
-//     if (!instructorUser || instructorUser.role !== 'teacher') {
-//       return res.status(400).json({ message: 'Instructor inválido' });
-//     }
+// Obtener cursos por estudiante
+exports.getCoursesByStudent = async (req, res) => {
+  try {
+    const courses = await Course.find({ students: req.params.studentId });
+    res.json(courses);
+  } catch (error) {
+    console.error('Error al obtener cursos por estudiante:', error.message);
+    res.status(500).json({ message: 'Error al obtener cursos por estudiante' });
+  }
+};
 
-//     const newCourse = new Course({
-//       title,
-//       description,
-//       instructor,
-//     });
-
-//     const savedCourse = await newCourse.save();
-//     res.status(201).json(savedCourse);
-//   } catch (error) {
-//     console.error('Error al crear el curso:', error.message);
-//     res.status(500).json({ message: 'Error al crear el curso' });
-//   }
-// };
-
+// Crear un nuevo curso
 exports.createCourse = async (req, res) => {
   try {
     const { title, code, description, instructor, schedule, startDate, endDate } = req.body;
 
-    // Verificar si el instructor existe y tiene el rol adecuado
     const instructorUser = await User.findById(instructor);
     if (!instructorUser || instructorUser.role !== 'teacher') {
       return res.status(400).json({ message: 'Instructor inválido' });
@@ -83,7 +80,7 @@ exports.createCourse = async (req, res) => {
   }
 };
 
-//? actualizar un curso
+// Actualizar un curso
 exports.updateCourse = async (req, res) => {
   try {
     const { title, description } = req.body;
@@ -105,7 +102,7 @@ exports.updateCourse = async (req, res) => {
   }
 };
 
-//? eliminar un curso
+// Eliminar un curso
 exports.deleteCourse = async (req, res) => {
   try {
     const deletedCourse = await Course.findByIdAndDelete(req.params.id);
@@ -118,5 +115,35 @@ exports.deleteCourse = async (req, res) => {
   } catch (error) {
     console.error('Error al eliminar el curso:', error.message);
     res.status(500).json({ message: 'Error al eliminar el curso' });
+  }
+};
+
+// Inscribir un estudiante en un curso
+exports.enrollStudent = async (req, res) => {
+  try {
+    const courseId = req.params.id;
+    const { studentId } = req.body;
+
+    const course = await Course.findById(courseId);
+    if (!course) {
+      return res.status(404).json({ message: 'Curso no encontrado' });
+    }
+
+    const student = await User.findById(studentId);
+    if (!student || student.role !== 'student') {
+      return res.status(400).json({ message: 'Estudiante inválido' });
+    }
+
+    if (course.students.includes(studentId)) {
+      return res.status(400).json({ message: 'Estudiante ya inscrito' });
+    }
+
+    course.students.push(studentId);
+    await course.save();
+
+    res.json({ message: 'Estudiante inscrito exitosamente', course });
+  } catch (error) {
+    console.error('Error al inscribir estudiante:', error.message);
+    res.status(500).json({ message: 'Error al inscribir estudiante' });
   }
 };
